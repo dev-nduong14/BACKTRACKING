@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+int n;
+int a[100][100];
+
+void tr(int i, int j, char s[]) {
+    if (i == n && j == n) {
+        printf("%s\n", s);
+        return;
+    }
+    
+    if (i + 1 <= n && a[i+1][j]) {
+        int len = strlen(s);
+        s[len] = 'D';
+        s[len+1] = '\0';
+        tr(i+1, j, s);
+        s[len] = '\0';
+    }
+    
+    if (j + 1 <= n && a[i][j+1]) {
+        int len = strlen(s);
+        s[len] = 'R';
+        s[len+1] = '\0';
+        tr(i, j+1, s);
+        s[len] = '\0';
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            printf("%d", a[i][j]);
+        }
+        printf("\n");
+    }
+    
+    if (a[1][1]) {  // Only start if the starting cell is accessible
+        char s[200] = "";  // Initialize empty string
+        tr(1, 1, s);
+    }
+    
+    return 0;
+}
