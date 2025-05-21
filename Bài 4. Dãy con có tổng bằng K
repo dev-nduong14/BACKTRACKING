@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int a[100];     // Mảng đầu vào
+int n;          // Số phần tử
+int k;          // Tổng cần đạt
+int x[100];     // Mảng lưu tổ hợp hiện tại
+int tong = 0;   // Tổng tạm
+
+void tr(int i, int m) {
+    if (tong == k) {
+        printf("[");
+        for (int j = 0; j < i; j++) {
+            printf("%d ", x[j]);
+        }
+        printf("]");
+        printf("\n");
+        return;
+    }
+
+    for (int j = m; j < n; j++) {
+        if (tong + a[j] <= k) {
+            x[i] = a[j];        // chọn a[j] vào tổ hợp tại vị trí i
+            tong += a[j];       // cộng vào tổng
+            tr(i + 1, j + 1);   // đệ quy tiếp theo, bắt đầu từ j+1 để không lặp
+            tong -= a[j];       // quay lui (gỡ lại a[j])
+        }
+    }
+}
+
+int main() {
+    scanf_s("%d%d", &n, &k);
+    for (int i = 0; i < n; i++) {
+        scanf_s("%d", &a[i]);
+    }
+    tr(0, 0);
+    return 0;
+}
